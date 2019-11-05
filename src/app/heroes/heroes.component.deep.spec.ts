@@ -13,9 +13,9 @@ describe('HeroesComponent (Deep Test)', () => {
 
     beforeEach(() => {
         HEROES = [
-            { id:1, name: 'Spider Man', strength: 1},
-            { id:1, name: 'Wonder Woman', strength: 3},
-            { id:1, name: 'Super Man', strength: 8},
+            { id:1, name: 'Spider Man', strength: 1 },
+            { id:1, name: 'Wonder Woman', strength: 3 },
+            { id:1, name: 'Super Man', strength: 8 },
         ];
         mockHeroService = jasmine.createSpyObj(['getHeroes', 'addHero', 'deleteHero']);
         TestBed.configureTestingModule({

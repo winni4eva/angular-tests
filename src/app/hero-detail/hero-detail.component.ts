@@ -33,8 +33,38 @@ export class HeroDetailComponent implements OnInit {
     this.location.back();
   }
 
- save(): void {
-    this.heroService.updateHero(this.hero)
+  //used for angular testing custom async tests
+  save(): void {
+    // Promises are always asynchronous, this will help us simulate a situation where we are relying on a third party 
+    // for http request which relies on promises
+    var p = new Promise(resolve => { 
+          this.heroService.updateHero(this.hero)
       .subscribe(() => this.goBack());
+      resolve(); 
+    })
+  }
+// Used for setTimout & fakeAsync tests
+//  save(): void {
+//    // This is to simulate asychronicity using setTimeout
+//    this.debounce(() => {
+//     this.heroService.updateHero(this.hero)
+//       .subscribe(() => this.goBack());
+//    }, 250, false)(); 
+//   }
+
+  // Helps ensure that a function doesnt get called too often
+  debounce(func, wait, immediate) {
+    var timeout;
+    return function(){
+      var context = this, args = arguments;
+      var later = function() {
+        timeout = null;
+        if(!immediate) func.apply(context, args);
+      };
+      var callNow = immediate && !timeout;
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+      if(callNow) func.apply(context, args);
+    }
   }
 }
